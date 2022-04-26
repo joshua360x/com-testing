@@ -8,6 +8,7 @@ export default function List() {
   const [burgers, setBurgers] = useState([])
   const [filteredResults, setFilteredResults] = useState()
   const [search, setSearch] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   const data = [
     {
@@ -51,22 +52,30 @@ export default function List() {
   //     const json = await displayBurger.json();
   //     console.log('json :>> ', json);
   //   };
-  
+  //   setIsLoading(false)
   //   getBurger();
   
   // }, [])
   return (
-    <main>
+    <>
+    {/* { isLoading ? (<h3> Hold On We are Loading your burgers</h3> ) : ( */}
+    { isLoading ? (<h3>Loading Burgers...</h3>) : 
+      <main>
+
       <input type="text" placeholder='Burger Search'
       value={search}
       onChange={searchHandler} />
       { filteredResults ? filteredResults.map((burger, i) => (
-          <Burger key={`${burger}+${i}`} {...burger} />
+        <Burger key={`${burger}+${i}`} {...burger} />
         )) :
         burgers.map((burger, i) => (
           <Burger key={`${burger}+${i}`} {...burger} />
-        ))
+          ))
+        }
+        )
+      </main>
+      
       }
-    </main>
+        </>
   )
 }
