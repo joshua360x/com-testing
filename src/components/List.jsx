@@ -8,7 +8,7 @@ export default function List() {
   const [burgers, setBurgers] = useState([])
   const [filteredResults, setFilteredResults] = useState()
   const [search, setSearch] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   const data = [
     {
@@ -62,7 +62,7 @@ export default function List() {
     { isLoading ? (<h3>Loading Burgers...</h3>) : 
       <main>
 
-      <input type="text" placeholder='Burger Search'
+      <input type="text" placeholder='Burger Search by Name'
       value={search}
       onChange={searchHandler} />
       { filteredResults ? filteredResults.map((burger, i) => (
