@@ -65,6 +65,8 @@ export default function List() {
       <input type="text" placeholder='Burger Search by Name'
       value={search}
       onChange={searchHandler} />
+      <ul>
+      
       { filteredResults ? filteredResults.map((burger, i) => (
         <Burger key={`${burger}+${i}`} {...burger} />
         )) :
@@ -72,6 +74,7 @@ export default function List() {
           <Burger key={`${burger}+${i}`} {...burger} />
           ))
         }
+        </ul>
         )
       </main>
       
