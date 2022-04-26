@@ -6,7 +6,8 @@ import Burger from './Burger'
 
 export default function List() {
   const [burgers, setBurgers] = useState([])
-  const [filteredResults, setFilteredResults] = useState([])
+  const [filteredResults, setFilteredResults] = useState()
+  const [search, setSearch] = useState('')
 
   const data = [
     {
@@ -25,9 +26,16 @@ export default function List() {
 
   }, [])
 
+  function searchHandler(e) {
+    setSearch(e.target.value)
+    const filteredBurgers = burgers.filter((burger) => 
+    burger.name.toLowerCase().includes(e.target.value.toLowerCase().trim())
+    )
+    setFilteredResults(filteredBurgers);
+  }
+
   // useEffect(() => {
-    
-    
+
   //   // .then(response => response.json())
   //   // .then(response => console.log(response))
   //   // .catch(err => console.error(err));
@@ -49,8 +57,12 @@ export default function List() {
   // }, [])
   return (
     <main>
-      <input type="text" placeholder='Burger Search' onChange={() => filteredResults} />
-      {
+      <input type="text" placeholder='Burger Search'
+      value={search}
+      onChange={searchHandler} />
+      { filteredResults ? filteredResults.map((burger, i) => (
+          <Burger key={`${burger}+${i}`} {...burger} />
+        )) :
         burgers.map((burger, i) => (
           <Burger key={`${burger}+${i}`} {...burger} />
         ))
