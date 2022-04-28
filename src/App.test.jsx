@@ -1,9 +1,10 @@
-import { getByRole, render, screen } from "@testing-library/react"
+import { getByRole, render, screen, waitForElementToBeRemoved } from "@testing-library/react"
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from "react-router-dom"
 
 import App from "./App"
 import Burger from "./components/Burger"
+import List from "./components/List"
 
 
 
@@ -14,9 +15,10 @@ test('should render the list of burgers', async () => {
 
 
   render( <MemoryRouter>
-    <App />
+    <List />
   </MemoryRouter>
     )
+    await waitForElementToBeRemoved(screen.getByText('Loading Burgers...'))
 
   
   // this is a component test
@@ -24,7 +26,7 @@ test('should render the list of burgers', async () => {
   
   const searchBox = screen.getByPlaceholderText('Burger Search by Name')
   userEvent.type(searchBox, 'bacon')
-  
+  // await waitForElementToBeRemoved(screen.getByText('Hey I ran'))
   // return waitFor(() => {
     
     const burger = await screen.findAllByRole('burger')
