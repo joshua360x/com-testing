@@ -6,9 +6,9 @@ import Burger from './Burger'
 
 export default function List() {
   const [burgers, setBurgers] = useState([])
-  const [filteredResults, setFilteredResults] = useState()
+  const [filteredResults, setFilteredResults] = useState([])
   const [search, setSearch] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   // const data = [
   //   {
@@ -29,11 +29,16 @@ export default function List() {
 
   function searchHandler(e) {
     setSearch(e.target.value)
+  }
+
+  useEffect(() => {
     const filteredBurgers = burgers.filter((burger) => 
-    burger.name.toLowerCase().includes(e.target.value.toLowerCase().trim())
+    burger.name.toLowerCase().includes(search.toLowerCase().trim())
     )
     setFilteredResults(filteredBurgers);
-  }
+    console.log('search :>> ', search);
+  }, [search])
+
 
   useEffect(() => {
 
@@ -52,8 +57,8 @@ export default function List() {
       const json = await displayBurger.json();
       // console.log('json :>> ', json);
       setBurgers(json)
+      setIsLoading(false)
     };
-    setIsLoading(false)
     getBurger();
   
   }, [])
@@ -68,15 +73,15 @@ export default function List() {
       onChange={searchHandler} />
       <ul>
       
-      { filteredResults ? filteredResults.map((burger, i) => (
+      { filteredResults.length > 0 ? filteredResults.map((burger, i) => (
         <Burger key={`${burger}+${i}`} {...burger} />
         )) :
         burgers.map((burger, i) => (
           <Burger key={`${burger}+${i}`} {...burger} />
           ))
+        // <h1>Hey I ran</h1>
         }
-        </ul>
-        )
+      </ul>
       </main>
       
       }
